@@ -5,16 +5,14 @@
   "author": "Sandro Lain",
   "type": "module",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:coverage:open": "jest --coverage && open ./coverage/lcov-report/index.html",
+    "serve": "npm run build && npx live-server --port=5678 --open=/assets/index.html --watch=./dist",
     "build": "npx rollup -c",
     "watch": "npx rollup -cw",
-    "serve": "npm run build && npx light-server -s . -p 5678 -o http://localhost:5678/demo -w \"dist/**/*.*\"",
-    "prepare": "npx tsc"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -27,21 +25,21 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^7.1.1",
-    "@types/jest": "^25.1.4",
-    "@types/node": "^13.9.8",
-    "@typescript-eslint/eslint-plugin": "^2.26.0",
-    "@typescript-eslint/parser": "^2.26.0",
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.1",
+    "@typescript-eslint/eslint-plugin": "^2.27.0",
+    "@typescript-eslint/parser": "^2.27.0",
     "eslint": "^6.8.0",
     "happy-dom": "^0.12.1",
-    "jest": "^25.2.4",
-    "light-server": "^2.6.4",
+    "jest": "^25.3.0",
+    "live-server": "^1.2.1",
     "node-sass": "^4.13.1",
     "open-cli": "^6.0.1",
-    "rollup": "^2.3.2",
+    "rollup": "^2.4.0",
     "rollup-plugin-html": "^0.2.1",
     "rollup-plugin-postcss": "^2.5.0",
     "rollup-plugin-typescript2": "^0.27.0",
-    "ts-jest": "^25.3.0",
+    "ts-jest": "^25.3.1",
     "typescript": "^3.8.3"
   },
   "dependencies": {

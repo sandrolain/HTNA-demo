@@ -19,7 +19,7 @@ export class Storage<T=any> {
     this.data.push(item);
 
     if(this.save()) {
-      this.onupdate.emit();
+      this.onupdate.emit(item);
       return true;
     }
 
@@ -32,7 +32,7 @@ export class Storage<T=any> {
     if(index > -1) {
       this.data.splice(index, 1);
       this.save();
-      this.onupdate.emit();
+      this.onupdate.emit(item);
     }
   }
 
@@ -44,7 +44,7 @@ export class Storage<T=any> {
       this.data.push(item);
     }
     this.save();
-    this.onupdate.emit();
+    this.onupdate.emit(item);
   }
 
   load (): void {

@@ -84,6 +84,10 @@ export function addDefinitions (model: Storage): void {
     render: () => /*html*/`<div id="list"><slot></slot></div>`,
     controller: ({ elementNode }) => {
       let selectedItem: any;
+      const selectItem = (item: Data): void => {
+        selectedItem = item;
+        elementNode.fireEvent("itemSelected", item);
+      };
       const updateList = (): void => {
         const $f = document.createDocumentFragment();
         model.getList().forEach((item) => {
@@ -91,8 +95,7 @@ export function addDefinitions (model: Storage): void {
             selected: (selectedItem === item ? "true" : "false")
           }, [ item.title ]);
           itemNode.addEventListener("click", () => {
-            selectedItem = item;
-            elementNode.fireEvent("itemSelected", item);
+            selectItem(item);
             updateList();
           });
           $f.appendChild(itemNode);
@@ -100,7 +103,9 @@ export function addDefinitions (model: Storage): void {
         elementNode.innerHTML = "";
         elementNode.appendChild($f);
       };
-      model.onupdate.subscribe(() => {
+
+      model.onupdate.subscribe((data) => {
+        selectItem(data);
         updateList();
       });
 
@@ -155,16 +160,13 @@ export function addDefinitions (model: Storage): void {
       at($form, "submit", (e) => {
         e.preventDefault();
         const data = new FormData($form);
-        const dataObj = Object.fromEntries((data as any).entries());
+        const dataObj = Object.fromEntries((data as any).entries()) as Data;
 
         if(selectedData) {
           model.replace(selectedData, dataObj);
         } else {
           model.add(dataObj);
         }
-
-        selectedData = null;
-        $form.reset();
       });
 
       at("demo-list", "itemSelected", (event: CustomEvent<Data>): void => {
